@@ -24,7 +24,6 @@ body{
     background: linear-gradient(180deg,#08111f 0%,#10203a 100%);
     color: white;
 }
-/* LOGO */
 .logo{
     color: #E4D96F;
     font-size: 28px;
@@ -32,7 +31,6 @@ body{
     letter-spacing: 3px;
     text-transform: uppercase;
 }
-/* MENÚ */
 nav ul{
     display: flex;
     list-style: none;
@@ -49,7 +47,6 @@ nav a{
     transition: 0.3s;
     padding: 8px 0;
 }
-/* EFECTO HOVER */
 nav a::after{
     content: "";
     position: absolute;
@@ -66,16 +63,13 @@ nav a:hover{
 nav a:hover::after{
     width: 100%;
 }
-/* PÁGINA ACTIVA */
 nav a.active{
     color: #E4D96F;
     font-weight: bold;
 }
-
 nav a.active::after{
     width: 100%;
 }
-/* fin del encabezado */
 .culture-hero{
     margin-top: 70px;
     height: 75vh;
@@ -84,7 +78,6 @@ nav a.active::after{
     align-items: center;
     padding: 40px;
 }
-
 .imagenes{
     display: flex;
     width: 100%;
@@ -126,7 +119,6 @@ nav a.active::after{
 .img-box:hover img{
     transform: scale(1.1);
 }
-
 .cuerpo{
     display: flex;
     flex-direction: row;
@@ -174,7 +166,6 @@ h2{
     color: #E4D96F;
     margin: 5px;
 }
-
 .contenedor_construccion{
     display: flex;
     flex-direction: row;
@@ -183,7 +174,6 @@ h2{
     width: 100%;
     padding: 20px;
 }
-
 .pasos{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -290,7 +280,6 @@ hr{
 .ubicacion{
     display: flex;
     flex-direction: row;
-    /* background-color: #112549; */
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -323,5 +312,4 @@ hr{
 }
 .mapa iframe{
     border-radius: 20px;
-    
 }

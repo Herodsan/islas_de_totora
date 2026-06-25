@@ -6,41 +6,16 @@ let direccion = 1;
 let controls;
 const loader = new THREE.GLTFLoader();
 
-// loader.load(
-//   'isla2.glb',        // ruta a tu archivo
-//   function(gltf){
-//     // éxito — el modelo cargó
-//     scene.add(gltf.scene);
-//     gltf.scene.position.set(0, -3,0);   // posición
-//     gltf.scene.scale.set(1.8, 1, 1);      // tamaño
-//     gltf.scene.rotation.y = 3;          // rotación
-//     renderer.render(scene, camera);
-//   },
-//   function(xhr){
-//     // progreso (opcional)
-//     console.log((xhr.loaded / xhr.total * 100) + '% cargado');
-//   },
-//   function(error){
-//     // error
-//     console.log('Error:', error);
-//   }
-// );
 function cargarModelo(ruta, x, y, z, sx, sy, sz, rotY = 0, callback = null) {
-
   loader.load(ruta, function(gltf) {
-
     const modelo = gltf.scene;
-
     modelo.position.set(x, y, z);
     modelo.scale.set(sx, sy, sz);
     modelo.rotation.y = rotY;
-
     scene.add(modelo);
-
     if(callback){
       callback(modelo);
     }
-
   });
 }
 
@@ -93,13 +68,11 @@ function crearCasa(posX, posY, posZ) {
   }
   frontalIzq.rotation.z = -60 * (Math.PI / 180);
   grupoCasa.add(frontalIzq);
-
   let geoP = new THREE.PlaneGeometry(0.7, 1.4,2,2);
   let matP = new THREE.MeshPhongMaterial({ color: 0x000000, side: THREE.DoubleSide });
   let puerta = new THREE.Mesh(geoP, matP);
   puerta.position.set(0, -0.5, 3);
   grupoCasa.add(puerta);
-
   grupoCasa.position.set(posX, posY, posZ);
   scene.add(grupoCasa);
   return grupoCasa;
@@ -114,9 +87,6 @@ function init(){
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth,window.innerHeight);
   document.getElementById("contenedor3D").appendChild(renderer.domElement);  
-  const luzDir = new THREE.DirectionalLight(0xE4D96F, 3);
-  luzDir.position.set(-5, 5, -5);
-  // scene.add(luzDir);
   const luzDir2 = new THREE.DirectionalLight(0xE4D96F, 3);
   luzDir2.position.set(-5, -5, 5);
   scene.add(luzDir2);
@@ -136,7 +106,6 @@ function init(){
   cargarModelo("planta.glb", -23.5, -2.1, -8.3, 0.3, 0.3, 0.3, 2); 
   cargarModelo("planta.glb", -13.5, -2.1, -6.8, 0.3, 0.3, 0.3, 2); 
   cargarModelo("barco3.glb",-19, -2, -5,0.2, 0.3, 0.3,2);
-  
   // isla de la derecha
   cargarModelo("isla.glb", 18, -2.2, -10, 1, 0.5, 0.5, 3);
   let casaDer1 = crearCasa(21,0,-12);
@@ -145,8 +114,6 @@ function init(){
   cargarModelo("planta.glb", 12, -2.1, -8.8, 0.3, 0.3, 0.3, 2); 
   cargarModelo("planta.glb", 13, -2.1, -15, 0.3, 0.3, 0.3, 2); 
   cargarModelo("barco3.glb",20, -2, -4.5,0.2, 0.3, 0.3,2);
-  
-
   //isla del medio
   cargarModelo("isla.glb", 0, -3, 0, 1.8, 1, 1, 3);
   cargarModelo("planta.glb", -10.3, -2.5, 3.5, 0.3, 0.3, 0.3, 2);
@@ -164,7 +131,7 @@ function init(){
 
   agua = new THREE.Mesh(aguaGeo, aguaMat);
   agua.rotation.x = -Math.PI / 2;
-  agua.position.y = -2; // nivel del agua (ajústalo a tu isla)
+  agua.position.y = -2; 
   scene.add(agua);
   
   // controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -187,13 +154,10 @@ function animate() {
   agua.geometry.computeVertexNormals();
 
   if(barco){
-
     anguloBarco -= 0.002;
     barco.position.x = Math.cos(anguloBarco) * 12;
     barco.position.z = Math.sin(anguloBarco) * 12;
-
     barco.position.y = -2 + Math.sin(tiempo * 2) * 0.08;
-
     barco.lookAt(
       Math.cos(anguloBarco + 0.1) * 12,
       barco.position.y,
