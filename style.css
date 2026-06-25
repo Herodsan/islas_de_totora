@@ -1,0 +1,327 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+/* inicio del encabezado */
+/* ===== HEADER ===== */
+header{
+    position: relative;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    background: rgba(8, 17, 31, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(228, 217, 111, 0.2);
+}
+body{
+    background: linear-gradient(180deg,#08111f 0%,#10203a 100%);
+    color: white;
+}
+/* LOGO */
+.logo{
+    color: #E4D96F;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+/* MENÚ */
+nav ul{
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+nav ul li{
+    position: relative;
+}
+nav a{
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 8px 0;
+}
+/* EFECTO HOVER */
+nav a::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background: #E4D96F;
+    transition: 0.3s;
+}
+nav a:hover{
+    color: #E4D96F;
+}
+nav a:hover::after{
+    width: 100%;
+}
+/* PÁGINA ACTIVA */
+nav a.active{
+    color: #E4D96F;
+    font-weight: bold;
+}
+
+nav a.active::after{
+    width: 100%;
+}
+/* fin del encabezado */
+.culture-hero{
+    margin-top: 70px;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.imagenes{
+    display: flex;
+    width: 100%;
+    height: 250px;
+    gap: 8px;
+    padding: 8px;
+}
+.img-box{
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.img-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+.img-box span{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+.imagenes:hover .img-box{
+    flex: 0.8;
+}
+.imagenes .img-box:hover{
+    flex: 2;
+}
+.img-box:hover img{
+    transform: scale(1.1);
+}
+
+.cuerpo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+.cajas_info{
+    background-color: #172949;
+    border: 1px solid rgba(228, 217, 111, 0.2);
+    width: 600px;
+    height: 350px;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 20px;
+    transition: 0.3s;
+}
+.contenido{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+.cajas_info:hover,.n_pasos:hover,.caja_datos:hover,.mapa:hover{
+    transform: scale(1.05);
+    background: #1f355a;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.texto{
+    color: white;
+    width: 60%;
+    line-height: 1.6;
+}
+.imagen_texto{
+    width: 260px;
+    border: 3px solid #E4D96F;
+    border-radius: 5px;
+}
+.imagen_texto img{
+    width: 100%;
+    height: 100%;
+}
+h2{
+    color: #E4D96F;
+    margin: 5px;
+}
+
+.contenedor_construccion{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.pasos{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+.n_pasos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #172949;
+    border: 1px solid rgba(228, 217, 111, 0.2);
+    color: #ffffff;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    width: 350px;
+    padding: 25px;
+    margin: 5px;
+    transition: 0.3s;
+}
+.n_pasos h2, .n_pasos p, .n_pasos img{
+    margin-bottom: 15px;
+}
+.n_pasos img{
+    width: 90%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.n_pasos h2{
+    color: #E4D96F;
+    text-align: center;
+}
+.titulo2{
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
+hr{
+    background-color: #E4D96F;
+    height: 2px;             
+    border: none;
+}
+.titulo1{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 42px;
+    color: #E4D96F;
+    letter-spacing: 1px;
+}
+.info2, .info{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgba(228, 217, 111, 0.25);
+    color: white;
+    width: 400px;
+    padding: 25px 35px;
+    animation: fadeIn 1.2s ease-out;
+}
+.info{
+    top: 50%;
+    left: 83%;
+}
+.info2{
+    top: 30%;
+    left: 83%;
+}
+.info2 h1,.info h1{
+    margin-bottom: 10px;
+    color: #E4D96F;
+    letter-spacing: 2px;
+}
+.info2 p,.info p{
+    font-size: 20px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+}
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to{
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+.boton_explorar{
+    display: inline-block;
+    background-color: #E4D96F;
+    color: black;
+    padding: 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-top: 15px;
+}
+.boton_explorar:hover{
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+.ubicacion{
+    display: flex;
+    flex-direction: row;
+    /* background-color: #112549; */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+.datos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+    padding: 10px;
+}
+.caja_datos{
+    justify-content: center;
+    text-align: center;
+    background:  #172949;
+    width: 200px;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(228, 217, 111, 0.25);
+    transition: 0.3s;
+}
+.mapa{
+    background-color: #172949;
+    border-radius: 20px;
+    border: 1px solid rgba(228, 217, 111, 0.25);
+    padding: 20px;
+    transition: 0.3s;
+}
+.mapa iframe{
+    border-radius: 20px;
+    
+}
