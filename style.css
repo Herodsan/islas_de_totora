@@ -10,6 +10,7 @@ html{
 /* ===== HEADER ===== */
 header{
     position: relative;
+    z-index: 1000;
     width: 100%;
     height: 75px;
     display: flex;
@@ -44,41 +45,33 @@ body{
 nav ul{
     display: flex;
     list-style: none;
-    gap: 35px;
+    gap: 18px;
 }
-nav ul li{
-    position: relative;
-}
+
 nav a{
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-family: "Cinzel", serif;
     color: white;
     text-decoration: none;
-    font-size: 17px;
-    font-weight: 500;
-    transition: 0.3s;
-    padding: 8px 0;
+    font-size: 20px;
+
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
 }
-nav a::after{
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background: #E4D96F;
-    transition: 0.3s;
-}
+
 nav a:hover{
     color: #E4D96F;
+    border: 1px solid #E4D96F;
+    box-shadow: 0 0 15px rgba(228,217,111,0.4);
+    transform: scale(1.05);
+    letter-spacing: 1px;
 }
-nav a:hover::after{
-    width: 100%;
-}
+
 nav a.active{
     color: #E4D96F;
-    font-weight: bold;
-}
-nav a.active::after{
-    width: 100%;
+    border: 1px solid #E4D96F;
+    box-shadow: 0 0 10px rgba(228,217,111,0.3);
 }
 .culture-hero{
     margin-top: 70px;
@@ -233,59 +226,122 @@ hr{
     color: #E4D96F;
     letter-spacing: 1px;
 }
-.info2, .info{
+.info,
+.info2{
     position: absolute;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(10px);    text-align: center;
-    border-radius: 10px;
-    border: 1px solid rgba(228, 217, 111, 0.25);
+    width: 430px;
+    padding: 35px;
+
+    background: rgba(5, 10, 18, 0.88);
+    border: 1px solid rgba(228,217,111,0.18);
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.75),
+        0 0 25px rgba(228,217,111,0.08);
+
+    backdrop-filter: blur(12px);
+
+    text-align: center;
     color: white;
-    width: 400px;
-    padding: 25px 35px;
-    animation: fadeIn 1.2s ease-out;
+
+    will-change: transform, opacity;
+
+    animation:
+        aparecer 0.6s ease-out,
+        flotarSuave 6s ease-in-out infinite;
 }
+
+/* posición */
 .info{
     top: 50%;
     left: 83%;
 }
+
 .info2{
-    top: 30%;
+    top: 40%;
     left: 83%;
 }
-.info2 h1,.info h1{
-    margin-bottom: 10px;
+
+/* TITULO */
+.info h1,
+.info2 h1{
     color: #E4D96F;
+    font-size: 38px;
+    margin-bottom: 15px;
     letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(228,217,111,0.25);
 }
-.info2 p,.info p{
-    font-size: 20px;
+
+/* TEXTO */
+.info p,
+.info2 p{
+    font-size: 18px;
+    line-height: 1.6;
     color: rgba(255,255,255,0.85);
-    line-height: 1.5;
 }
-@keyframes fadeIn{
+
+/* BOTON */
+.boton_explorar{
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 26px;
+
+    background: linear-gradient(135deg, #E4D96F, #c9b84d);
+    color: #08111f;
+
+    border: none;
+    border-radius: 30px;
+
+    font-weight: bold;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+
+    box-shadow: 0 8px 20px rgba(228,217,111,0.2);
+}
+
+.boton_explorar:hover{
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(228,217,111,0.35);
+}
+
+/* BOTONES CONTENEDOR */
+.botonesInfo{
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+}
+.izquierda{
+    left: 20% !important;
+}
+
+.derecha{
+    left: 80% !important;
+}
+@keyframes aparecer{
     from{
         opacity: 0;
-        transform: translate(-50%, -60%);
     }
     to{
         opacity: 1;
-        transform: translate(-50%, -50%);
     }
 }
-.boton_explorar{
-    display: inline-block;
-    background-color: #E4D96F;
-    color: black;
-    padding: 8px;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: 0.3s;
-    margin-top: 15px;
-}
-.boton_explorar:hover{
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+
+@keyframes flotarSuave{
+    0%{
+        transform: translate(-50%, -50%);
+    }
+    50%{
+        transform: translate(-50%, -52%);
+    }
+    100%{
+        transform: translate(-50%, -50%);
+    }
 }
 .ubicacion{
     display: flex;
@@ -322,4 +378,212 @@ hr{
 }
 .mapa iframe{
     border-radius: 20px;
+}
+@keyframes flotar{
+    0%{
+        transform: translate(-50%,-50%);
+    }
+
+    50%{
+        transform: translate(-50%,-53%);
+    }
+
+    100%{
+        transform: translate(-50%,-50%);
+    }
+}
+
+.infoTotora{
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    padding: 35px;
+    background: rgba(5, 10, 18, 0.88);
+    border: 1px solid rgba(228,217,111,0.18);
+    border-radius: 22px;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.75),
+        0 0 25px rgba(228,217,111,0.08);
+    backdrop-filter: blur(12px);
+    color: white;
+    text-align: center;
+    z-index: 100;
+    animation:
+        aparecer 0.6s ease-out,
+        flotarSuave 6s ease-in-out infinite;
+}
+
+.infoBarco{
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    padding: 35px;
+    background: rgba(5, 10, 18, 0.88);
+    border: 1px solid rgba(228,217,111,0.18);
+    border-radius: 22px;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.75),
+        0 0 25px rgba(228,217,111,0.08);
+    backdrop-filter: blur(12px);
+    color: white;
+    text-align: center;
+    z-index: 100;
+    animation:
+        aparecer 0.6s ease-out,
+        flotarSuave 6s ease-in-out infinite;
+}
+
+.infoBarco h1, .infoTotora h1{
+    color: #E4D96F;
+    font-size: 38px;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(228,217,111,0.25);
+}
+
+.infoBarco p, .infoTotora p{
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 15px;
+}
+
+.infoBarco .boton_explorar{
+    margin-top: 15px;
+}
+#barcoModelo{
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
+/* Menú desplegable */
+nav ul li{
+    position: relative;
+}
+.dropdown{
+    position: relative;
+}
+.submenu{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1001;
+    min-width: 180px;
+    list-style: none;
+    background: rgba(8,17,31,0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(228,217,111,0.25);
+    border-radius: 12px;
+    padding: 8px 0;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,.4);
+    z-index: 1000;
+}
+.submenu li{
+    width: 100%;
+}
+.submenu a{
+    display: block;
+    padding: 12px 18px;
+    font-size: 18px;
+    border-radius: 0;
+}
+.submenu a:hover{
+    background: rgba(228,217,111,.12);
+    color: #E4D96F;
+}
+.dropdown:hover .submenu{
+    display: block;
+}
+/* galeria */
+/* ================= ESCENA 3D ================= */
+
+#contenedor3D{
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+}
+
+#contenedor3D canvas{
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+/* ================= GALERÍA ================= */
+
+.galeria{
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    min-height: calc(100vh - 75px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+.contenedorGaleria{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 35px;
+    width: min(1200px,95%);
+}
+
+/* ===== TARJETAS ===== */
+.marco{
+    animation: flotar 5s ease-in-out infinite;
+}
+.marco:nth-child(2n){
+    animation-delay: .8s;
+}
+.marco:nth-child(3n){
+    animation-delay: 1.6s;
+}
+.marco:nth-child(4n){
+    animation-delay: 2.4s;
+}
+.imagen{
+    width:100%;
+    height:320px;
+    overflow:hidden;
+    border-radius:22px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 20px 45px rgba(0,0,0,.45);
+    transition:.35s;
+    cursor:pointer;
+}
+.imagen img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.4s;
+}
+.marco:hover{
+    z-index:20;
+}
+.marco:hover .imagen{
+    transform:translateY(-12px) scale(1.06);
+    box-shadow:
+        0 0 30px rgba(228,217,111,.5),
+        0 25px 60px rgba(0,0,0,.6);
+}
+.marco:hover img{
+    transform:scale(1.12);
+}
+@keyframes flotar{
+    0%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+    100%{
+        transform:translateY(0px);
+    }
 }

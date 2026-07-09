@@ -1,50 +1,9 @@
+var scene,camera,renderer;
 let agua, aguaGeo, aguaMat, tiempo = 0;
 let anguloBarco = 120*(Math.PI/180);
-let barco;
 let barco2;
-let direccion = 1;
-let controls;
-let destinoCamara = new THREE.Vector3();
-let destinoLook = new THREE.Vector3();
-let paginaCultura = 0;
-let animCamara = {
-    activa: false,
-    inicio: new THREE.Vector3(),
-    objetivo: new THREE.Vector3(),
-    lookInicio: new THREE.Vector3(),
-    lookObjetivo: new THREE.Vector3(),
-    tiempo: 0,
-    duracion: 1.5
-};
-
-const cultura = [
-{
-    titulo: "Origen del pueblo Uru",
-    texto: "Los Urus son uno de los pueblos más antiguos del altiplano andino, anteriores incluso a los incas y aymaras. Según su tradición, se establecieron en el Lago Titicaca como una forma de refugio y adaptación al entorno acuático. Con el tiempo, desarrollaron una forma de vida única basada completamente en el lago, convirtiéndose en un pueblo estrechamente ligado al agua y a la totora.",
-    cam: { x: 0, y: 1, z: 12 },
-    look: { x: 0, y: 0, z: 0 }
-},
-{
-    titulo: "Viviendas flotantes",
-    texto: "Las viviendas de los Urus están construidas sobre islas artificiales hechas de totora, un material vegetal que crece en el lago. Estas islas requieren mantenimiento constante, ya que la base se descompone con el tiempo y debe ser reemplazada. Las casas también son ligeras y hechas del mismo material, lo que permite que toda la comunidad viva sobre una superficie flotante.",
-    cam: { x: -19, y: 1, z: -1 },
-    look: { x: -20, y: 0, z: -4 }
-},
-{
-    titulo: "Barcos de totora",
-    texto: "Los Urus utilizan embarcaciones hechas de totora para desplazarse por el Lago Titicaca, pescar y realizar actividades comerciales. Estos barcos son ligeros, resistentes y fáciles de construir con materiales naturales del entorno. Además de su función práctica, también representan una tradición cultural que ha pasado de generación en generación.",
-    cam: { x: -22, y: 1, z: 0 },
-    look: { x: -18, y: 0, z: -2 }
-  },
-{
-    titulo: "La totora",
-    texto: "La totora es la base de la vida de los Urus.",
-    cam: { x: -12, y: -1, z: 8 },
-    look: { x: -10, y: 0, z: 5 }
-}
-];
-
 const loader = new THREE.GLTFLoader();
+
 function cargarModelo(ruta, x, y, z, sx, sy, sz, rotY = 0, callback = null) {
   loader.load(ruta, function(gltf) {
     const modelo = gltf.scene;
@@ -60,6 +19,7 @@ function cargarModelo(ruta, x, y, z, sx, sy, sz, rotY = 0, callback = null) {
 
 function crearCasa(posX, posY, posZ) {
   const grupoCasa = new THREE.Group();
+
   function cilindro(radio, alto, x, y, z, color) {
     let geometry = new THREE.CylinderGeometry(radio, radio, alto, 32);
     let material = new THREE.MeshPhongMaterial({ color: color});
@@ -68,6 +28,7 @@ function crearCasa(posX, posY, posZ) {
     grupoCasa.add(cilindro);
     return cilindro;
   }
+
   let j = 2.5;
   for (let i = 0; i < 30; i++) {
     cilindro(0.05, 2.5, -1.5, 0, i * 0.1, 0xE4D96F);
@@ -82,12 +43,14 @@ function crearCasa(posX, posY, posZ) {
       j -= 0.06;
     }
   }
+
   for (let i = 0; i < 30; i++) {
     let tDer = cilindro(0.05, 2.5, -1, 1.6, i * 0.1, 0xC29A4A);
     tDer.rotation.z = -60 * (Math.PI / 180);
     let tIzq = cilindro(0.05, 2.5,  1, 1.6, i * 0.1, 0xC29A4A);
     tIzq.rotation.z =  60 * (Math.PI / 180);
   }
+
   let frontalDer = new THREE.Group();
   for (let i = 0; i < 16; i++) {
     let p = cilindro(0.05, 2.5, i * 0.09 + 0.5, -0.2, 2.93, 0xC29A4A);
@@ -95,6 +58,7 @@ function crearCasa(posX, posY, posZ) {
   }
   frontalDer.rotation.z = 60 * (Math.PI / 180);
   grupoCasa.add(frontalDer);
+
   let frontalIzq = new THREE.Group();
   for (let i = 0; i < 16; i++) {
     let p = cilindro(0.05, 2.5, i * 0.09 - 1.9, -0.2, 2.92, 0xC29A4A);
@@ -110,71 +74,6 @@ function crearCasa(posX, posY, posZ) {
   grupoCasa.position.set(posX, posY, posZ);
   scene.add(grupoCasa);
   return grupoCasa;
-}
-function moverCamara(){
-    // guardar inicio
-    animCamara.inicio.copy(camera.position);
-    animCamara.objetivo.set(cultura[paginaCultura].cam.x,cultura[paginaCultura].cam.y,cultura[paginaCultura].cam.z);
-    animCamara.lookInicio.copy(destinoLook);
-    animCamara.lookObjetivo.set(cultura[paginaCultura].look.x,cultura[paginaCultura].look.y,cultura[paginaCultura].look.z);
-    animCamara.tiempo = 0;
-    animCamara.activa = true;
-}
-function cameraReset(){
-    animCamara.inicio.copy(camera.position);
-    animCamara.objetivo.set(-6, 3, 17);
-    animCamara.lookInicio.copy(destinoLook);
-    animCamara.lookObjetivo.set(0, 0, 0);
-    animCamara.tiempo = 0;
-    animCamara.activa = true;
-}
-function easeInOut(t){
-    return t < 0.5
-        ? 2 * t * t
-        : 1 - Math.pow(-2 * t + 2, 2) / 2;
-}
-function actualizarInfo(){
-    const panel = document.getElementById("panelInfo");
-    panel.classList.remove("izquierda", "derecha");
-    if(paginaCultura % 2 === 0){
-        panel.classList.add("derecha");
-    }else{
-        panel.classList.add("izquierda");
-    }
-    document.getElementById("tituloInfo").innerHTML = cultura[paginaCultura].titulo;
-    document.getElementById("textoInfo").innerHTML = cultura[paginaCultura].texto;
-    const btnSiguiente = document.getElementById("btnSiguiente");
-    if(paginaCultura === cultura.length - 1){
-        btnSiguiente.disabled = true;
-    }else{
-        btnSiguiente.disabled = false;
-    }
-}
-function mostrarCultura(){
-    document.getElementById("inicioInfo").style.display = "none";
-    document.getElementById("panelInfo").style.display = "block";
-    paginaCultura = 0;
-    actualizarInfo();
-    moverCamara(); // 👈 INICIA EN ORIGEN URO
-}
-function siguienteInfo(){
-    if(paginaCultura < cultura.length - 1){
-        paginaCultura++;
-        actualizarInfo();
-        moverCamara();
-    }
-}
-function anteriorInfo(){
-    if(paginaCultura > 0){
-        paginaCultura--;
-        actualizarInfo();
-        moverCamara(); // 👈 ESTO ES LO QUE FALTA
-    }
-    else{
-        document.getElementById("panelInfo").style.display = "none";
-        document.getElementById("inicioInfo").style.display = "block";
-        cameraReset();
-    }
 }
 function crearCasaTotora(x, y, z){
     let casa = new THREE.Group();
@@ -218,8 +117,6 @@ function init(){
   scene.background = new THREE.Color(0x0b1a2b); 
   camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
   camera.position.set(-6, 3, 17);
-  destinoCamara.set(-6,3,17);
-  destinoLook.set(0,0,0);
   camera.lookAt(0, 0, 0);
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth,window.innerHeight);
@@ -231,6 +128,7 @@ function init(){
   lightAmb.position.set(0, 0, 0);
   scene.add(lightAmb);
   scene.fog = new THREE.Fog(0x0b1a2b, 10, 80);
+  
   crearCasa(-4,0,-4);
   crearCasa(1.5,0,-4);
   crearCasaTotora(-7,-1.5,0.5);
@@ -264,31 +162,14 @@ function init(){
   
   aguaGeo = new THREE.PlaneGeometry(200, 200, 100, 100);
   aguaMat = new THREE.MeshPhongMaterial({color: 0x2E42FF,transparent: true,opacity: 0.7,shininess: 100});
+
   agua = new THREE.Mesh(aguaGeo, aguaMat);
   agua.rotation.x = -Math.PI / 2;
   agua.position.y = -2; 
   scene.add(agua);
   
-  // controls = new THREE.OrbitControls(camera, renderer.domElement);
-  // controls.enableDamping = true;
-  // controls.dampingFactor = 0.05;
-  // controls.minDistance = 5;
-  // controls.maxDistance = 50;
 }
 function animate() {
-  if(animCamara.activa){
-    animCamara.tiempo += 0.016; // ~60fps
-    let t = animCamara.tiempo / animCamara.duracion;
-    if(t >= 1){
-        t = 1;
-        animCamara.activa = false;
-    }
-    const e = easeInOut(t);
-    camera.position.lerpVectors(animCamara.inicio,animCamara.objetivo,e);
-
-    destinoLook.lerpVectors(animCamara.lookInicio,animCamara.lookObjetivo,e);
-}
-  camera.lookAt(destinoLook);
   requestAnimationFrame(animate);
   tiempo += 0.02;
   const pos = agua.geometry.attributes.position;
@@ -319,8 +200,7 @@ function animate() {
     barco2.position.x = -18;
   }
 }
-  // controls.update();
   renderer.render(scene, camera);
 }
 init();
-animate();
+animate();s

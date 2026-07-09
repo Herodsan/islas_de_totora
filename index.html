@@ -15,21 +15,37 @@
             <nav>
                 <ul>
                     <li><a href="index.html" class="active">Inicio</a></li>
-                    <li><a href="cultura.html">Cultura</a></li>
-                    <li><a href="construccion.html">Construccion</a></li>
+                    <li class="dropdown">
+                        <a href="#">Modelos</a>
+                        <ul class="submenu">
+                            <li><a href="barcos.html">Barcos</a></li>
+                            <li><a href="casas.html">Casas</a></li>
+                            <li><a href="totora.html">Totora</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="galeria.html">Galeria</a></li>
                     <li><a href="ubicacion.html">Ubicacion</a></li>
                 </ul>
             </nav>
         </header>
-        <div class="info2">
+        <div class="info2" id="inicioInfo">
             <h1>ISLAS DE TOTORA</h1>
             <p>Un mundo construido sobre el agua del Lago Titicaca</p>
-            <a href="cultura.html" class="boton_explorar">Descubrir la cultura Uru</a>
+            <button class="boton_explorar"onclick="mostrarCultura()">Descubrir la cultura Uru</button>
         </div>
-        <div id="contenedor3D"></div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        <script src="script.js"></script>
+
+        <div class="info" id="panelInfo" style="display:none;">
+            <h1 id="tituloInfo"></h1>
+            <p id="textoInfo"></p>
+            <div class="botonesInfo">
+            <button class="boton_explorar" onclick="anteriorInfo()">Atrás</button>
+            <button id="btnSiguiente" class="boton_explorar" onclick="siguienteInfo()">Continuar</button>
+            </div>
+        </div>
+            <div id="contenedor3D"></div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+            <script src="script.js"></script>
     </body>
 </html>
